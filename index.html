@@ -7,10 +7,6 @@
   <title>duckmp4</title>
 
   <style>
-     .center{
-      text-align: center;
-    }
-    .s{background-image:url("star.png");background-repeat: repeat-x;  width: 100%; height: 16px; margin-bottom: 10px;}
     /* 기본 스타일 */
     html, body {
       font-family: 'Pretendard', Arial, sans-serif;
@@ -48,7 +44,7 @@
       color: #fff;
     }
 
-    /* 재생 중인 곡명 표시 영역 (글자 그림자 효과 및 음표 또렷하게 수정) */
+    /* 상단 현재 곡명 표시 */
     .now-playing {
       max-width: 720px;
       width: 95%;
@@ -93,7 +89,7 @@
       padding-top: 56.25%; /* 16:9 비율 */
     }
 
-    #player, #html5Video {
+    #ytPlayerFrame, #html5Video {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -174,7 +170,7 @@
 </head>
 
 <body>
-<div class="s"></div> 
+
 <div class="nav">
   <a href="?cat=old" id="nav-old">OLD</a>
   <a href="?cat=enka" id="nav-enka">ENKA</a>
@@ -182,14 +178,13 @@
 </div>
 
 <div class="player-box">
-  <!-- 상단 현재 곡명 표시 영역 -->
   
 
   <div class="player-container">
     <div class="player-ratio">
-      <!-- 유튜브 플레이어 -->
-      <div id="player"></div>
-      <!-- MP4 동영상 전용 플레이어 -->
+      <!-- 유튜브 플레이어 컨테이너 -->
+      <div id="ytPlayerDiv"><div id="ytPlayerFrame"></div></div>
+      <!-- MP4 동영상 플레이어 -->
       <video id="html5Video" controls playsinline></video>
     </div>
   </div>
@@ -204,45 +199,43 @@
 </div>
 
 <script>
-// 카테고리별 데이터 (모두 10곡으로 확대)
+// 요청하신 형식 (type, url 속성 적용)
 const playlists = {
   old: [
-    { title: "🎵 Green Green Grass of Home", id: "uoo3P_xGYog" },
-    { title: "🎵 the house of the rising sun", id: "GZqX8kg4rSQ" },
-    { title: "🎵 Cotton Fields (1969)", id: "AlSjx6F5Pl8" },
-    { title: "🎵 Country Boots Music", id: "eQXVFUc4eDw" },
-    { title: "🎵 Red River Valley", id: "70PwqEHGlb4" },
-    { title: "🎵 Tennessee Waltz ( 1959 )", id: "5GWDgirgsq4" },
-    { title: "🎵 Sunset Country Classic", id: "XFKcH4446Vw" },
-    { title: "🎵 Take Me Home Country Roads", id: "iK0vsVRWsww" },
-    { title: "🎵 Do That To Me One More Time", id: "z_XfJyrNLRQ" },
-    { title: "🎵 Best Country Heartland Songs", id: "8VO67jNHLpA" }
+    { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4" },
+    { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4" },
+    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog" },
+    { title: "🎵 the house of the rising sun", type: "youtube", url: "GZqX8kg4rSQ" },
+    { title: "🎵 Cotton Fields (1969)", type: "youtube", url: "AlSjx6F5Pl8" },
+    { title: "🎵 Country Boots Music", type: "youtube", url: "eQXVFUc4eDw" },
+    { title: "🎵 Red River Valley", type: "youtube", url: "70PwqEHGlb4" },
+    { title: "🎵 Tennessee Waltz ( 1959 )", type: "youtube", url: "5GWDgirgsq4" },
+    { title: "🎵 Sunset Country Classic", type: "youtube", url: "XFKcH4446Vw" },
+    { title: "🎵 Take Me Home Country Roads", type: "youtube", url: "iK0vsVRWsww" }
   ],
   enka: [
-    /* 
-       MP4 파일을 사용하는 경우 id 대신 mp4 속성에 파일 주소(URL)를 적어주시면 됩니다.
-       예시: mp4: "https://raw.githubusercontent.com/사용자/저장소/main/video1.mp4"
-    */
-    { title: "🎵 린 X 아즈마 아키-사사메 유키(細雪)", id: "vgPvhr7ZWbw" },
-    { title: "🎵 린 - 인생외길", id: "rfjffhNxdLQ" },
-    { title: "🎵 都はるみ 裏町ごころ", id: "vnHDs5DlAG0" },
-    { title: "🎵 린 X 아즈마 아키", id: "vgPvhr7ZWbw" },
-    { title: "🎵 雪中花 伍代夏子", id: "B6WmSUodgRQ" },
-    { title: "🎵 Enka Hit Track 06", id: "vgPvhr7ZWbw" },
-    { title: "🎵 Enka Hit Track 07", id: "rfjffhNxdLQ" },
-    { title: "🎵 Enka Hit Track 08", id: "vnHDs5DlAG0" },
-    { title: "🎵 Enka Hit Track 09", id: "B6WmSUodgRQ" },
-    { title: "🎵 Enka Hit Track 10", id: "vgPvhr7ZWbw" }
+    { title: "🎵 린 X 아즈마 아키-사사메 유키(細雪)", type: "youtube", url: "vgPvhr7ZWbw" },
+    { title: "🎵 린 - 인생외길", type: "youtube", url: "rfjffhNxdLQ" },
+    { title: "🎵 都はるみ 裏町ごころ", type: "youtube", url: "vnHDs5DlAG0" },
+    { title: "🎵 雪中花 伍代夏子", type: "youtube", url: "B6WmSUodgRQ" },
+    { title: "🎵 Enka Song 05", type: "youtube", url: "vgPvhr7ZWbw" },
+    { title: "🎵 Enka Song 06", type: "youtube", url: "rfjffhNxdLQ" },
+    { title: "🎵 Enka Song 07", type: "youtube", url: "vnHDs5DlAG0" },
+    { title: "🎵 Enka Song 08", type: "youtube", url: "B6WmSUodgRQ" },
+    { title: "🎵 Enka Song 09", type: "youtube", url: "vgPvhr7ZWbw" },
+    { title: "🎵 Enka Song 10", type: "youtube", url: "rfjffhNxdLQ" }
   ],
   jazz: [
-    { title: "🎷 번지없는 주막", id: "Z9vzsUxvsEg" },
-    { title: "🎷 영시의 이별", id: "29JJnC_L3OE" },
-    { title: "🎷 배호 모음집", id: "dEc-U2hgd6A" },
-    { title: "🎷 꿈꾸는 백마강", id: "50-PlZVG7aA" },
-    { title: "🎷 고향아줌마", id: "6wvUMP1ZS7U" },
- { title: "🎵 내 직접 만든 영상", mp4: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4" },
-{ title: "🎬 전향진 남자라는 이유로", mp4, url: "bae.mp4" },
-    { title: "🎷 Jazz Collection 10", id: "6wvUMP1ZS7U" }
+    { title: "🎷 번지없는 주막", type: "youtube", url: "Z9vzsUxvsEg" },
+    { title: "🎷 영시의 이별", type: "youtube", url: "29JJnC_L3OE" },
+    { title: "🎷 배호 모음집", type: "youtube", url: "dEc-U2hgd6A" },
+    { title: "🎷 꿈꾸는 백마강", type: "youtube", url: "50-PlZVG7aA" },
+    { title: "🎷 고향아줌마", type: "youtube", url: "6wvUMP1ZS7U" },
+    { title: "🎷 Jazz Track 06", type: "youtube", url: "Z9vzsUxvsEg" },
+    { title: "🎷 Jazz Track 07", type: "youtube", url: "29JJnC_L3OE" },
+   { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4" },
+  { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4" },,
+    { title: "🎷 Jazz Track 10", type: "youtube", url: "6wvUMP1ZS7U" }
   ]
 };
 
@@ -260,72 +253,65 @@ if (activeNav) activeNav.classList.add("active");
 let currentIndex = 0;
 const table = document.getElementById("playlist");
 const html5Video = document.getElementById("html5Video");
-const ytPlayerDiv = document.getElementById("player");
+const ytPlayerDiv = document.getElementById("ytPlayerDiv");
 const nowPlayingDiv = document.getElementById("nowPlaying");
+var player = null;
 
-// 테이블 리스트 생성
+// 플레이리스트 생성
 currentListData.forEach((song, index) => {
   const tr = document.createElement("tr");
   tr.innerHTML = `<td>${song.title}</td>`;
-  tr.onclick = () => playByIndex(index);
+  tr.onclick = () => playByIndex(index, true);
   table.appendChild(tr);
 });
 
-var player;
+// 유튜브 API
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player("player", {
-    videoId: currentListData[0].id || "",
-    playerVars: { 
-      rel: 0, 
-      playsinline: 1,
-      autoplay: 0 
-    },
-    events: { 
-      onReady: onPlayerReady,
-      onStateChange: onStateChange 
+  player = new YT.Player("ytPlayerFrame", {
+    videoId: "",
+    playerVars: { rel: 0, playsinline: 1, autoplay: 0 },
+    events: {
+      onStateChange: onStateChange
     }
   });
+  // API 준비 후 첫 곡 설정
+  playByIndex(0, false);
 }
 
-function onPlayerReady() {
-  playByIndex(0, false); // 초기 로딩 (자동재생 안함)
-}
-
-function playByIndex(index, isUserAction = true) {
+function playByIndex(index, autoPlay = true) {
   currentIndex = index;
   const currentSong = currentListData[currentIndex];
 
-  // 상단 곡명 업데이트
+  // 곡명 업데이트
   if (nowPlayingDiv) {
     nowPlayingDiv.textContent = currentSong.title;
   }
-
   setActiveRow(currentIndex);
 
-  // MP4 동영상인 경우
-  if (currentSong.mp4) {
+  // MP4 타입인 경우
+  if (currentSong.type === "mp4") {
     if (player && typeof player.pauseVideo === "function") {
       player.pauseVideo();
     }
     ytPlayerDiv.style.display = "none";
     html5Video.style.display = "block";
     
-    html5Video.src = currentSong.mp4;
-    if (isUserAction) {
-      html5Video.play();
+    html5Video.src = currentSong.url;
+    if (autoPlay) {
+      html5Video.play().catch(e => console.log(e));
     }
   } 
-  // 유튜브 동영상인 경우
+  // 유튜브 타입인 경우 (기본값)
   else {
     html5Video.pause();
     html5Video.style.display = "none";
     ytPlayerDiv.style.display = "block";
 
     if (player && typeof player.loadVideoById === "function") {
-      if (isUserAction) {
-        player.loadVideoById(currentSong.id);
+      if (autoPlay) {
+        player.loadVideoById(currentSong.url);
       } else {
-        player.cueVideoById(currentSong.id);
+        player.cueVideoById(currentSong.url);
       }
     }
   }
@@ -334,24 +320,24 @@ function playByIndex(index, isUserAction = true) {
 
 function playPrev() {
   currentIndex = (currentIndex - 1 + currentListData.length) % currentListData.length;
-  playByIndex(currentIndex);
+  playByIndex(currentIndex, true);
 }
 
 function playNext() {
   currentIndex = (currentIndex + 1) % currentListData.length;
-  playByIndex(currentIndex);
+  playByIndex(currentIndex, true);
 }
 
 function togglePlayPause() {
   const currentSong = currentListData[currentIndex];
   
-  if (currentSong.mp4) {
+  if (currentSong.type === "mp4") {
     if (html5Video.paused) {
       html5Video.play();
     } else {
       html5Video.pause();
     }
-  } else if (player) {
+  } else if (player && typeof player.getPlayerState === "function") {
     const state = player.getPlayerState();
     if (state === YT.PlayerState.PLAYING) {
       player.pauseVideo();
@@ -367,7 +353,6 @@ html5Video.onended = function() {
   playNext();
 };
 
-// MP4 재생 상태 변경 시 버튼 텍스트 업데이트
 html5Video.onplay = updatePlayPauseButton;
 html5Video.onpause = updatePlayPauseButton;
 
@@ -382,7 +367,7 @@ function updatePlayPauseButton() {
   const btn = document.getElementById("btnPlayPause");
   const currentSong = currentListData[currentIndex];
 
-  if (currentSong.mp4) {
+  if (currentSong.type === "mp4") {
     btn.textContent = html5Video.paused ? "▶ 재생" : "⏸ 일시정지";
   } else if (player && typeof player.getPlayerState === "function") {
     const state = player.getPlayerState();
