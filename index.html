@@ -191,43 +191,22 @@
 <script>
 const playlists = {
   old: [
-    { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 3 },
-    { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4", start: 3 },
-    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog", start: 3 }, /* 13초부터 시작 */
-    { title: "🎵 the house of the rising sun", type: "youtube", url: "GZqX8kg4rSQ", start: 3 },
-    { title: "🎵 Cotton Fields (1969)", type: "youtube", url: "AlSjx6F5Pl8", start: 3 },,
-    { title: "🎵 Country Boots Music", type: "youtube", url: "eQXVFUc4eDw", start: 3 },
-    { title: "🎵 Red River Valley", type: "youtube", url: "70PwqEHGlb4", start: 3 },
-    { title: "🎵 Tennessee Waltz ( 1959 )", type: "youtube", url: "5GWDgirgsq4", start: 3 },
-    { title: "🎵 Sunset Country Classic", type: "youtube", url: "XFKcH4446Vw", start: 3 },
-    { title: "🎵 Take Me Home Country Roads", type: "youtube", url: "iK0vsVRWsww" }
+    { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 2 },
+    { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4", start: 2 },
+    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog", start: 2 },
+    { title: "🎵 the house of the rising sun", type: "youtube", url: "GZqX8kg4rSQ", start: 2 },
+    { title: "🎵 Cotton Fields (1969)", type: "youtube", url: "AlSjx6F5Pl8", start: 2 },
+    { title: "🎵 Country Boots Music", type: "youtube", url: "eQXVFUc4eDw", start: 2 }
   ],
   enka: [
     { title: "🎵 린 X 아즈마 아키-사사메 유키(細雪)", type: "youtube", url: "vgPvhr7ZWbw" },
-    { title: "🎵 린 - 인생외길", type: "youtube", url: "rfjffhNxdLQ" },
-    { title: "🎵 都はるみ 裏町ごころ", type: "youtube", url: "vnHDs5DlAG0" },
-    { title: "🎵 雪中花 伍代夏子", type: "youtube", url: "B6WmSUodgRQ" },
-    { title: "🎵 Enka Song 05", type: "youtube", url: "vgPvhr7ZWbw" },
-    { title: "🎵 Enka Song 06", type: "youtube", url: "rfjffhNxdLQ" },
-    { title: "🎵 Enka Song 07", type: "youtube", url: "vnHDs5DlAG0" },
-    { title: "🎵 Enka Song 08", type: "youtube", url: "B6WmSUodgRQ" },
-    { title: "🎵 Enka Song 09", type: "youtube", url: "vgPvhr7ZWbw" },
-    { title: "🎵 Enka Song 10", type: "youtube", url: "rfjffhNxdLQ" }
+    { title: "🎵 린 - 인생외길", type: "youtube", url: "rfjffhNxdLQ" }
   ],
   jazz: [
     { title: "🎷 번지없는 주막", type: "youtube", url: "Z9vzsUxvsEg" },
-    { title: "🎷 영시의 이별", type: "youtube", url: "29JJnC_L3OE" },
-    { title: "🎷 배호 모음집", type: "youtube", url: "dEc-U2hgd6A" },
-    { title: "🎷 꿈꾸는 백마강", type: "youtube", url: "50-PlZVG7aA" },
-    { title: "🎷 고향아줌마", type: "youtube", url: "6wvUMP1ZS7U" },
-    { title: "🎷 Jazz Track 06", type: "youtube", url: "Z9vzsUxvsEg" },
-    { title: "🎷 Jazz Track 07", type: "youtube", url: "29JJnC_L3OE" },
-    { title: "🎷 Jazz Track 08", type: "youtube", url: "dEc-U2hgd6A" },
-    { title: "🎷 Jazz Track 09", type: "youtube", url: "50-PlZVG7aA" },
-    { title: "🎷 Jazz Track 10", type: "youtube", url: "6wvUMP1ZS7U" }
+    { title: "🎷 영시의 이별", type: "youtube", url: "29JJnC_L3OE" }
   ]
 };
-
 
 function getCategory() {
   const params = new URLSearchParams(window.location.search);
@@ -246,7 +225,7 @@ const html5Video = document.getElementById("html5Video");
 const ytPlayerDiv = document.getElementById("ytPlayerDiv");
 const nowPlayingDiv = document.getElementById("nowPlaying");
 var player = null;
-var isYtReady = false; // 유튜브 API 준비 완료 여부
+var isYtReady = false;
 
 // 목록 생성
 if (currentListData && currentListData.length > 0) {
@@ -258,7 +237,7 @@ if (currentListData && currentListData.length > 0) {
   });
 }
 
-// 유튜브 API 호출 준비 완료 시 실행
+// 유튜브 API 로드 완료 시 실행
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("ytPlayerFrame", {
     videoId: "",
@@ -266,7 +245,6 @@ function onYouTubeIframeAPIReady() {
     events: {
       onReady: function() {
         isYtReady = true;
-        // 초기 0번 곡 준비 (자동재생 없이 로드)
         playByIndex(0, false);
       },
       onStateChange: onStateChange
@@ -286,7 +264,7 @@ function playByIndex(index, autoPlay = true) {
   }
   setActiveRow(currentIndex);
 
-  // MP4 파일 처리
+  // MP4 동영상 재생
   if (currentSong.type === "mp4") {
     if (isYtReady && player && typeof player.pauseVideo === "function") {
       player.pauseVideo();
@@ -302,13 +280,12 @@ function playByIndex(index, autoPlay = true) {
       }
     };
   } 
-  // 유튜브 처리
+  // 유튜브 영상 재생
   else {
     html5Video.pause();
     html5Video.style.display = "none";
     ytPlayerDiv.style.display = "block";
 
-    // API가 아직 준비 전이라면 iframe src 직접 교체 방식으로 보완
     if (!isYtReady || !player || typeof player.loadVideoById !== "function") {
       const iframe = document.getElementById("ytPlayerFrame");
       const autoPlayParam = autoPlay ? 1 : 0;
@@ -381,7 +358,7 @@ function updatePlayPauseButton() {
     btn.textContent = html5Video.paused ? "▶ 재생" : "⏸ 일시정지";
   } else if (isYtReady && player && typeof player.getPlayerState === "function") {
     const state = player.getPlayerState();
-   btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생";
+    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생"; // 오타 수정된 부분
   }
 }
 
@@ -397,7 +374,6 @@ document.getElementById("btnNext").addEventListener("click", playNext);
 document.getElementById("btnPlayPause").addEventListener("click", togglePlayPause);
 </script>
 
-<!-- 유튜브 API 스크립트 -->
 <script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
