@@ -40,33 +40,30 @@
       color: #fff;
     }
 
-    .now-playing {
-      max-width: 720px;
-      width: 95%;
-      margin: 10px auto 0;
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      word-break: keep-all;
-      color: #ffffff;
-      text-shadow: 
-        -1px -1px 0 #1e293b,
-         1px -1px 0 #1e293b,
-        -1px  1px 0 #1e293b,
-         1px  1px 0 #1e293b,
-         0px  2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    .player-box {
-      max-width: 720px;
-      width: 100%;
-      margin: 0 auto;
-      background: #ffffff;
-      position: sticky;
-      top: 61px;
-      z-index: 999;
-      padding: 10px 0 15px;
-    }
+  /* 상단 현재 곡명 표시 (위치 및 여백 줄임) */
+.now-playing {
+  max-width: 720px;
+  width: 95%;
+  margin: 0 auto 8px; /* 아래 여백을 8px로 줄여 여백 최소화 */
+  padding: 0;
+  text-align: center;
+  font-size: 16px; /* 폰트 크기를 약간 줄여 부담스럽지 않게 수정 */
+  font-weight: bold;
+  word-break: keep-all;
+  color: #333333; /* 가독성을 위해 깔끔한 어두운 톤으로 변경 (필요시 백그라운드 색상에 맞춰 조정) */
+  line-height: 1.2;
+}
+/* 플레이어 영역 고정 (상단 카테고리 및 제목 레이아웃 간격 최적화) */
+.player-box {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  position: sticky;
+  top: 55px; /* 상단 메뉴 높이에 맞춰 여백 조정 */
+  z-index: 999;
+  padding: 8px 0 12px; /* 위아래 패딩(여백) 축소 */
+}
 
     .player-container {
       width: 95%;
