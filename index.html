@@ -210,9 +210,9 @@
 // 요청하신 형식 (type, url 속성 적용)
 const playlists = {
   old: [
-    { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4" },
+    { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 3 },
     { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4" },
-    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog" },
+    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog", start: 13 }, /* 13초부터 시작 */
     { title: "🎵 the house of the rising sun", type: "youtube", url: "GZqX8kg4rSQ" },
     { title: "🎵 Cotton Fields (1969)", type: "youtube", url: "AlSjx6F5Pl8" },
     { title: "🎵 Country Boots Music", type: "youtube", url: "eQXVFUc4eDw" },
@@ -241,11 +241,12 @@ const playlists = {
     { title: "🎷 고향아줌마", type: "youtube", url: "6wvUMP1ZS7U" },
     { title: "🎷 Jazz Track 06", type: "youtube", url: "Z9vzsUxvsEg" },
     { title: "🎷 Jazz Track 07", type: "youtube", url: "29JJnC_L3OE" },
-   { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4" },
-  { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4" },,
+    { title: "🎷 Jazz Track 08", type: "youtube", url: "dEc-U2hgd6A" },
+    { title: "🎷 Jazz Track 09", type: "youtube", url: "50-PlZVG7aA" },
     { title: "🎷 Jazz Track 10", type: "youtube", url: "6wvUMP1ZS7U" }
   ]
 };
+
 
 function getCategory() {
   const params = new URLSearchParams(window.location.search);
@@ -289,7 +290,7 @@ function onYouTubeIframeAPIReady() {
 function playByIndex(index, autoPlay = true) {
   currentIndex = index;
   const currentSong = currentListData[currentIndex];
-
+   const startTime = currentSong.start || 0; // 지정된 start 시간(기본값: 0초)
   // 곡명 업데이트
   if (nowPlayingDiv) {
     nowPlayingDiv.textContent = currentSong.title;
@@ -305,23 +306,46 @@ function playByIndex(index, autoPlay = true) {
     html5Video.style.display = "block";
     
     html5Video.src = currentSong.url;
+    html5Video.currentTime = startTime; // 이 줄이 추가됨 (초 단위 이동)
     if (autoPlay) {
       html5Video.play().catch(e => console.log(e));
     }
   } 
   // 유튜브 타입인 경우 (기본값)
-  else {
+ else {
+
     html5Video.pause();
+
     html5Video.style.display = "none";
+
     ytPlayerDiv.style.display = "block";
 
     if (player && typeof player.loadVideoById === "function") {
+
       if (autoPlay) {
-        player.loadVideoById(currentSong.url);
+
+        player.loadVideoById({
+
+          videoId: currentSong.url,
+
+          startSeconds: startTime // 유튜브 시작 시간 설정
+
+        });
+
       } else {
-        player.cueVideoById(currentSong.url);
+
+        player.cueVideoById({
+
+          videoId: currentSong.url,
+
+          startSeconds: startTime // 유튜브 시작 시간 설정
+
+        });
+
       }
+
     }
+
   }
   updatePlayPauseButton();
 }
