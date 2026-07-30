@@ -3,19 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta content='img.jpg' property='og:image'/>  
-  <title>duckmp4</title>
+  <title>Music Player</title>
 
   <style>
-     .center{
-      text-align: center;
-    }
-    .s{background-image:url("star.png");background-repeat: repeat-x;  width: 100%; height: 16px; margin-bottom: 10px;}
-       #hello{
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-}
-    /* 기본 스타일 */
     html, body {
       font-family: 'Pretendard', Arial, sans-serif;
       background: #ffffff;
@@ -23,14 +13,12 @@
       padding: 0;
     }
 
-    /* 상단 메뉴 고정 */
     .nav {
       display: flex;
       justify-content: center;
       gap: 10px;
       padding: 15px 0;
       background: #ffffff;
-      border-bottom: 0px solid #ddd;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -52,7 +40,6 @@
       color: #fff;
     }
 
-    /* 상단 현재 곡명 표시 */
     .now-playing {
       max-width: 720px;
       width: 95%;
@@ -70,7 +57,6 @@
          0px  2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    /* 플레이어 영역 고정 */
     .player-box {
       max-width: 720px;
       width: 100%;
@@ -94,7 +80,7 @@
     .player-ratio {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 비율 */
+      padding-top: 56.25%;
     }
 
     #ytPlayerFrame, #html5Video {
@@ -110,7 +96,6 @@
       object-fit: contain;
     }
 
-    /* 플레이리스트 테이블 */
     table {
       max-width: 720px;
       width: 95%;
@@ -150,7 +135,6 @@
       color: #4a7cff;
     }
 
-    /* 하단 컨트롤러 */
     .controls {
       display: flex;
       justify-content: center;
@@ -178,7 +162,7 @@
 </head>
 
 <body>
-<div class="s"></div> 
+
 <div class="nav">
   <a href="?cat=old" id="nav-old">OLD</a>
   <a href="?cat=enka" id="nav-enka">ENKA</a>
@@ -186,13 +170,11 @@
 </div>
 
 <div class="player-box">
-  
+  <div id="nowPlaying" class="now-playing"></div>
 
   <div class="player-container">
     <div class="player-ratio">
-      <!-- 유튜브 플레이어 컨테이너 -->
       <div id="ytPlayerDiv"><div id="ytPlayerFrame"></div></div>
-      <!-- MP4 동영상 플레이어 -->
       <video id="html5Video" controls playsinline></video>
     </div>
   </div>
@@ -207,7 +189,6 @@
 </div>
 
 <script>
-// 요청하신 형식 (type, url 속성 적용)
 const playlists = {
   old: [
     { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 3 },
@@ -265,87 +246,86 @@ const html5Video = document.getElementById("html5Video");
 const ytPlayerDiv = document.getElementById("ytPlayerDiv");
 const nowPlayingDiv = document.getElementById("nowPlaying");
 var player = null;
+var isYtReady = false; // 유튜브 API 준비 완료 여부
 
-// 플레이리스트 생성
-currentListData.forEach((song, index) => {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `<td>${song.title}</td>`;
-  tr.onclick = () => playByIndex(index, true);
-  table.appendChild(tr);
-});
+// 목록 생성
+if (currentListData && currentListData.length > 0) {
+  currentListData.forEach((song, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${song.title}</td>`;
+    tr.onclick = () => playByIndex(index, true);
+    table.appendChild(tr);
+  });
+}
 
-// 유튜브 API
+// 유튜브 API 호출 준비 완료 시 실행
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("ytPlayerFrame", {
     videoId: "",
     playerVars: { rel: 0, playsinline: 1, autoplay: 0 },
     events: {
+      onReady: function() {
+        isYtReady = true;
+        // 초기 0번 곡 준비 (자동재생 없이 로드)
+        playByIndex(0, false);
+      },
       onStateChange: onStateChange
     }
   });
-  // API 준비 후 첫 곡 설정
-  playByIndex(0, false);
 }
 
 function playByIndex(index, autoPlay = true) {
   currentIndex = index;
   const currentSong = currentListData[currentIndex];
-   const startTime = currentSong.start || 0; // 지정된 start 시간(기본값: 0초)
-  // 곡명 업데이트
+  if (!currentSong) return;
+
+  const startTime = currentSong.start || 0;
+
   if (nowPlayingDiv) {
     nowPlayingDiv.textContent = currentSong.title;
   }
   setActiveRow(currentIndex);
 
-  // MP4 타입인 경우
+  // MP4 파일 처리
   if (currentSong.type === "mp4") {
-    if (player && typeof player.pauseVideo === "function") {
+    if (isYtReady && player && typeof player.pauseVideo === "function") {
       player.pauseVideo();
     }
     ytPlayerDiv.style.display = "none";
     html5Video.style.display = "block";
     
     html5Video.src = currentSong.url;
-    html5Video.currentTime = startTime; // 이 줄이 추가됨 (초 단위 이동)
-    if (autoPlay) {
-      html5Video.play().catch(e => console.log(e));
-    }
+    html5Video.onloadedmetadata = function() {
+      html5Video.currentTime = startTime;
+      if (autoPlay) {
+        html5Video.play().catch(e => console.log(e));
+      }
+    };
   } 
-  // 유튜브 타입인 경우 (기본값)
- else {
-
+  // 유튜브 처리
+  else {
     html5Video.pause();
-
     html5Video.style.display = "none";
-
     ytPlayerDiv.style.display = "block";
 
-    if (player && typeof player.loadVideoById === "function") {
-
+    // API가 아직 준비 전이라면 iframe src 직접 교체 방식으로 보완
+    if (!isYtReady || !player || typeof player.loadVideoById !== "function") {
+      const iframe = document.getElementById("ytPlayerFrame");
+      const autoPlayParam = autoPlay ? 1 : 0;
+      iframe.src = `https://www.youtube.com/embed/${currentSong.url}?enablejsapi=1&autoplay=${autoPlayParam}&start=${startTime}`;
+    } else {
       if (autoPlay) {
-
         player.loadVideoById({
-
           videoId: currentSong.url,
-
-          startSeconds: startTime // 유튜브 시작 시간 설정
-
+          startSeconds: startTime
         });
-
       } else {
-
         player.cueVideoById({
-
           videoId: currentSong.url,
-
-          startSeconds: startTime // 유튜브 시작 시간 설정
-
+          startSeconds: startTime
         });
-
       }
-
     }
-
   }
   updatePlayPauseButton();
 }
@@ -362,14 +342,15 @@ function playNext() {
 
 function togglePlayPause() {
   const currentSong = currentListData[currentIndex];
-  
+  if (!currentSong) return;
+
   if (currentSong.type === "mp4") {
     if (html5Video.paused) {
       html5Video.play();
     } else {
       html5Video.pause();
     }
-  } else if (player && typeof player.getPlayerState === "function") {
+  } else if (isYtReady && player && typeof player.getPlayerState === "function") {
     const state = player.getPlayerState();
     if (state === YT.PlayerState.PLAYING) {
       player.pauseVideo();
@@ -380,11 +361,7 @@ function togglePlayPause() {
   updatePlayPauseButton();
 }
 
-// MP4 재생 종료 시 다음 곡 자동 재생
-html5Video.onended = function() {
-  playNext();
-};
-
+html5Video.onended = function() { playNext(); };
 html5Video.onplay = updatePlayPauseButton;
 html5Video.onpause = updatePlayPauseButton;
 
@@ -398,12 +375,13 @@ function onStateChange(e) {
 function updatePlayPauseButton() {
   const btn = document.getElementById("btnPlayPause");
   const currentSong = currentListData[currentIndex];
+  if (!currentSong) return;
 
   if (currentSong.type === "mp4") {
     btn.textContent = html5Video.paused ? "▶ 재생" : "⏸ 일시정지";
-  } else if (player && typeof player.getPlayerState === "function") {
+  } else if (isYtReady && player && typeof player.getPlayerState === "function") {
     const state = player.getPlayerState();
-    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생";
+   btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생";
   }
 }
 
@@ -419,6 +397,7 @@ document.getElementById("btnNext").addEventListener("click", playNext);
 document.getElementById("btnPlayPause").addEventListener("click", togglePlayPause);
 </script>
 
+<!-- 유튜브 API 스크립트 -->
 <script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
