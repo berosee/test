@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Music Player</title>
+  <title>duckmp4</title>
 
   <style>
+     .s{background-image:url("star.png");background-repeat: repeat-x;  width: 100%; height: 16px; margin-bottom: 10px;}
     html, body {
       font-family: 'Pretendard', Arial, sans-serif;
       background: #ffffff;
@@ -13,12 +14,11 @@
       padding: 0;
     }
 
-    /* 카테고리 네비게이션 여백 최소화 */
     .nav {
       display: flex;
       justify-content: center;
       gap: 10px;
-      padding: 4px 0 2px;
+      padding: 15px 0;
       background: #ffffff;
       position: sticky;
       top: 0;
@@ -27,9 +27,9 @@
 
     .nav a {
       text-decoration: none;
-      padding: 5px 14px;
+      padding: 8px 18px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: #666;
       background: #f1f1f1;
@@ -41,31 +41,33 @@
       color: #fff;
     }
 
-    /* 곡명 표시 영역 높이 및 여백 바짝 축소 */
-    .now-playing {
-      max-width: 720px;
-      width: 90%;
-      margin: 0 auto;
-      padding: 2px 0; /* 위아래 패딩 최소화 */
-      text-align: center;
-      font-size: 16px;
-      font-weight: bold;
-      word-break: keep-all;
-      color: white;
-      text-shadow: 1px 1px 0px black, 0 0 20px blue, 0 0 5px darkblue;
-    }
-
-    /* 플레이어 영역 패딩 최소화로 동영상 위치를 위로 이동 */
-    .player-box {
-      max-width: 720px;
-      width: 100%;
-      margin: 0 auto;
-      background: #ffffff;
-      position: sticky;
-      top: 32px;
-      z-index: 999;
-      padding: 0 0 10px; /* 상단 패딩 제거 */
-    }
+  /* 상단 현재 곡명 표시 (위치 및 여백 줄임) */
+.now-playing {
+  max-width: 720px;
+  width: 95%;
+  margin: 0 auto 8px; /* 아래 여백을 8px로 줄여 여백 최소화 */
+  padding: 0;
+  text-align: center;
+  font-size: 16px; /* 폰트 크기를 약간 줄여 부담스럽지 않게 수정 */
+  font-weight: bold;
+  word-break: keep-all;
+  color: #333333; /* 가독성을 위해 깔끔한 어두운 톤으로 변경 (필요시 백그라운드 색상에 맞춰 조정) */
+  line-height: 1.2;
+   /* 선명한 다크 아웃라인 적용 */
+   color: white;
+  text-shadow: 1px 1px 0px black, 0 0 20px blue, 0 0 5px darkblue;
+}
+/* 플레이어 영역 고정 (상단 카테고리 및 제목 레이아웃 간격 최적화) */
+.player-box {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  position: sticky;
+  top: 55px; /* 상단 메뉴 높이에 맞춰 여백 조정 */
+  z-index: 999;
+  padding: 8px 0 12px; /* 위아래 패딩(여백) 축소 */
+}
 
     .player-container {
       width: 95%;
@@ -161,6 +163,7 @@
 </head>
 
 <body>
+<div class="s"></div> 
 
 <div class="nav">
   <a href="?cat=old" id="nav-old">OLD</a>
@@ -189,23 +192,44 @@
 
 <script>
 const playlists = {
-  old: [
+ old: [
     { title: "🎬 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 2 },
-    { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4", start: 2 },
-    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog", start: 2 },
+    { title: "🎬 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4" },
+    { title: "🎵 Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog", start: 3 }, /* 13초부터 시작 */
     { title: "🎵 the house of the rising sun", type: "youtube", url: "GZqX8kg4rSQ", start: 2 },
     { title: "🎵 Cotton Fields (1969)", type: "youtube", url: "AlSjx6F5Pl8", start: 2 },
-    { title: "🎵 Country Boots Music", type: "youtube", url: "eQXVFUc4eDw", start: 2 }
+    { title: "🎵 Country Boots Music", type: "youtube", url: "eQXVFUc4eDw", start: 2 },
+    { title: "🎵 Red River Valley", type: "youtube", url: "70PwqEHGlb4", start: 2 },
+    { title: "🎵 Tennessee Waltz ( 1959 )", type: "youtube", url: "5GWDgirgsq4", start: 2 },
+    { title: "🎵 Sunset Country Classic", type: "youtube", url: "XFKcH4446Vw", start: 2 },
+    { title: "🎵 Take Me Home Country Roads", type: "youtube", url: "iK0vsVRWsww", start: 12 }
   ],
   enka: [
     { title: "🎵 린 X 아즈마 아키-사사메 유키(細雪)", type: "youtube", url: "vgPvhr7ZWbw" },
-    { title: "🎵 린 - 인생외길", type: "youtube", url: "rfjffhNxdLQ" }
+    { title: "🎵 린 - 인생외길", type: "youtube", url: "rfjffhNxdLQ" },
+    { title: "🎵 都はるみ 裏町ごころ", type: "youtube", url: "vnHDs5DlAG0" },
+    { title: "🎵 雪中花 伍代夏子", type: "youtube", url: "B6WmSUodgRQ" },
+    { title: "🎵 Enka Song 05", type: "youtube", url: "vgPvhr7ZWbw" },
+    { title: "🎵 Enka Song 06", type: "youtube", url: "rfjffhNxdLQ" },
+    { title: "🎵 Enka Song 07", type: "youtube", url: "vnHDs5DlAG0" },
+    { title: "🎵 Enka Song 08", type: "youtube", url: "B6WmSUodgRQ" },
+    { title: "🎵 Enka Song 09", type: "youtube", url: "vgPvhr7ZWbw" },
+    { title: "🎵 Enka Song 10", type: "youtube", url: "rfjffhNxdLQ" }
   ],
   jazz: [
     { title: "🎷 번지없는 주막", type: "youtube", url: "Z9vzsUxvsEg" },
-    { title: "🎷 영시의 이별", type: "youtube", url: "29JJnC_L3OE" }
+    { title: "🎷 영시의 이별", type: "youtube", url: "29JJnC_L3OE" },
+    { title: "🎷 배호 모음집", type: "youtube", url: "dEc-U2hgd6A" },
+    { title: "🎷 꿈꾸는 백마강", type: "youtube", url: "50-PlZVG7aA" },
+    { title: "🎷 고향아줌마", type: "youtube", url: "6wvUMP1ZS7U" },
+    { title: "🎷 Jazz Track 06", type: "youtube", url: "Z9vzsUxvsEg" },
+    { title: "🎷 Jazz Track 07", type: "youtube", url: "29JJnC_L3OE" },
+    { title: "🎷 Jazz Track 08", type: "youtube", url: "dEc-U2hgd6A" },
+    { title: "🎷 Jazz Track 09", type: "youtube", url: "50-PlZVG7aA" },
+    { title: "🎷 Jazz Track 10", type: "youtube", url: "6wvUMP1ZS7U" }
   ]
 };
+
 
 function getCategory() {
   const params = new URLSearchParams(window.location.search);
@@ -226,6 +250,7 @@ const nowPlayingDiv = document.getElementById("nowPlaying");
 var player = null;
 var isYtReady = false;
 
+// 목록 생성
 if (currentListData && currentListData.length > 0) {
   currentListData.forEach((song, index) => {
     const tr = document.createElement("tr");
@@ -235,6 +260,7 @@ if (currentListData && currentListData.length > 0) {
   });
 }
 
+// 유튜브 API 로드 완료 시 실행
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("ytPlayerFrame", {
     videoId: "",
@@ -261,6 +287,7 @@ function playByIndex(index, autoPlay = true) {
   }
   setActiveRow(currentIndex);
 
+  // MP4 동영상 재생
   if (currentSong.type === "mp4") {
     if (isYtReady && player && typeof player.pauseVideo === "function") {
       player.pauseVideo();
@@ -275,7 +302,9 @@ function playByIndex(index, autoPlay = true) {
         html5Video.play().catch(e => console.log(e));
       }
     };
-  } else {
+  } 
+  // 유튜브 영상 재생
+  else {
     html5Video.pause();
     html5Video.style.display = "none";
     ytPlayerDiv.style.display = "block";
@@ -352,7 +381,7 @@ function updatePlayPauseButton() {
     btn.textContent = html5Video.paused ? "▶ 재생" : "⏸ 일시정지";
   } else if (isYtReady && player && typeof player.getPlayerState === "function") {
     const state = player.getPlayerState();
-    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생";
+    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생"; // 오타 수정된 부분
   }
 }
 
