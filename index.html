@@ -230,7 +230,12 @@ const playlists = {
   ]
 };
 
-
+// 음표/아이콘 + [제목 - 아티스트] 텍스트 생성 함수
+function getFormattedTitle(song) {
+  const icon = song.type === "mp4" ? "🎬" : "🎵";
+  const nameText = song.artist ? `${song.title} - ${song.artist}` : song.title;
+  return `${icon} ${nameText}`;
+}
 function getCategory() {
   const params = new URLSearchParams(window.location.search);
   return params.get("cat") || "old";
@@ -254,7 +259,7 @@ var isYtReady = false;
 if (currentListData && currentListData.length > 0) {
   currentListData.forEach((song, index) => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${song.title}</td>`;
+   tr.innerHTML = `<td>${getFormattedTitle(song)}</td>`;
     tr.onclick = () => playByIndex(index, true);
     table.appendChild(tr);
   });
@@ -282,9 +287,9 @@ function playByIndex(index, autoPlay = true) {
 
   const startTime = currentSong.start || 0;
 
-  if (nowPlayingDiv) {
-    nowPlayingDiv.textContent = currentSong.title;
-  }
+ if (nowPlayingDiv) {
+  nowPlayingDiv.textContent = getFormattedTitle(currentSong);
+}
   setActiveRow(currentIndex);
 
   // MP4 동영상 재생
