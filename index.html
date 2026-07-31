@@ -3,100 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>duckmp4-1</title>
+  <meta content='meta.jpg' property='og:image'/>  
+  <title>utube mp42</title>
 
   <style>
-     .s{background-image:url("star.png");background-repeat: repeat-x;  width: 100%; height: 16px; margin-bottom: 10px;}
+    .center{
+      text-align: center;
+    }
+    .s{
+      background-image:url("star.png");
+      background-repeat: repeat-x;  
+      width: 100%; 
+      height: 16px; 
+      margin-bottom: 10px;
+    }
+    #hello{
+      color: white;
+      text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    }
+    #hell{
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
+    }
+    .world {
+      color: yellow;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+    
+    /* 기본 스타일 */
     html, body {
-      font-family: 'Pretendard', Arial, sans-serif;
       background: #ffffff;
       margin: 0;
       padding: 0;
+      font-family: 'Pretendard', Arial, sans-serif;
     }
 
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 15px 0;
-      background: #ffffff;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .nav a {
-      text-decoration: none;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #666;
-      background: #f1f1f1;
-      transition: 0.3s;
-    }
-
-    .nav a.active {
-      background: #4a7cff;
-      color: #fff;
-    }
-
-  /* 상단 현재 곡명 표시 (위치 및 여백 줄임) */
-.now-playing {
-  max-width: 720px;
-  width: 95%;
-  margin: 0 auto 8px; /* 아래 여백을 8px로 줄여 여백 최소화 */
-  padding: 0;
-  text-align: center;
-  font-size: 16px; /* 폰트 크기를 약간 줄여 부담스럽지 않게 수정 */
-  font-weight: bold;
-  word-break: keep-all;
-  color: #333333; /* 가독성을 위해 깔끔한 어두운 톤으로 변경 (필요시 백그라운드 색상에 맞춰 조정) */
-  line-height: 1.2;
-   /* 선명한 다크 아웃라인 적용 */
-   color: white;
-  text-shadow: 1px 1px 0px black, 0 0 20px blue, 0 0 5px darkblue;
-}
-/* 플레이어 영역 고정 (상단 카테고리 및 제목 레이아웃 간격 최적화) */
-.player-box {
-  max-width: 720px;
-  width: 100%;
-  margin: 0 auto;
-  background: #ffffff;
-  position: sticky;
-  top: 55px; /* 상단 메뉴 높이에 맞춰 여백 조정 */
-  z-index: 999;
-  padding: 8px 0 12px; /* 위아래 패딩(여백) 축소 */
-}
-
-    .player-container {
+    /* 재생 중인 곡명 표시 영역 */
+    .now-playing {
+      max-width: 720px;
       width: 95%;
-      margin: 0 auto;
+      margin: 20px auto 0;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      word-break: keep-all;
+      color: white;
+      text-shadow: 1px 1px 0px black, 0 0 20px blue, 0 0 5px darkblue;
+    }
+
+    /* 플레이어 영역 */
+    .player-box {
+      max-width: 720px;
+      width: 95%;
+      margin: 10px auto 20px;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      background: #000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     .player-ratio {
       position: relative;
       width: 100%;
-      padding-top: 56.25%;
+      padding-top: 56.25%; /* 16:9 비율 */
+      background: #000;
     }
 
-    #ytPlayerFrame, #html5Video {
+    #player, #mp4Player {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      border: none;
     }
 
-    #html5Video {
-      display: none;
+    #mp4Player {
+      display: none; /* 기본적으로 mp4 플레이어는 숨김 */
       object-fit: contain;
     }
 
+    /* 플레이리스트 테이블 */
     table {
       max-width: 720px;
       width: 95%;
@@ -104,12 +88,12 @@
       border-collapse: collapse;
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
     }
 
     td {
       position: relative;
-      padding: 15px 15px 15px 45px;
+      padding: 12px 15px 12px 40px;
       border-bottom: 1px solid #eee;
       cursor: pointer;
       line-height: 1.4;
@@ -130,17 +114,18 @@
     tr.active td::before {
       content: "▶";
       position: absolute;
-      left: 18px;
+      left: 15px;
       top: 50%;
       transform: translateY(-50%);
       color: #4a7cff;
     }
 
+    /* 하단 컨트롤러 */
     .controls {
       display: flex;
       justify-content: center;
       gap: 15px;
-      padding: 20px 0 50px;
+      margin-bottom: 50px;
     }
 
     .controls button {
@@ -152,33 +137,25 @@
       background: #fff;
       border-radius: 30px;
       transition: 0.2s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
 
     .controls button:hover {
       background: #f1f1f1;
-      border-color: #ccc;
     }
   </style>
 </head>
 
 <body>
 <div class="s"></div> 
-
-<div class="nav">
-  <a href="?cat=old" id="nav-old">OLD</a>
-  <a href="?cat=enka" id="nav-enka">ENKA</a>
-  <a href="?cat=jazz" id="nav-jazz">JAZZ</a>
-</div>
+<!-- 동영상 상단 재생 곡명 표시 영역 -->
+<div id="nowPlaying" class="now-playing"></div>
 
 <div class="player-box">
-  <div id="nowPlaying" class="now-playing"></div>
-
-  <div class="player-container">
-    <div class="player-ratio">
-      <div id="ytPlayerDiv"><div id="ytPlayerFrame"></div></div>
-      <video id="html5Video" controls playsinline></video>
-    </div>
+  <div class="player-ratio">
+    <!-- 유튜브 플레이어 영역 -->
+    <div id="player"></div>
+    <!-- mp4 동영상 재생용 HTML5 video 태그 -->
+    <video id="mp4Player" controls playsinline></video>
   </div>
 </div>
 
@@ -191,173 +168,170 @@
 </div>
 
 <script>
-const playlists = {
- old: [
-   
-    { title: " 1960년대 감성", artist: "정통 트로트",type: "youtube", url: "-ICJXKD72Xw", start: 12 },
-    { title: " Green Green Grass of Home", type: "youtube", url: "uoo3P_xGYog", start: 3 }, /* 13초부터 시작 */
-    { title: " the house of the rising sun", type: "youtube", url: "GZqX8kg4rSQ", start: 2 },
-    { title: " Cotton Fields (1969)", type: "youtube", url: "AlSjx6F5Pl8", start: 2 },
-    { title: " Country Boots Music", type: "youtube", url: "eQXVFUc4eDw", start: 2 },
-    { title: " Red River Valley", type: "youtube", url: "70PwqEHGlb4", start: 2 },
-    { title: " Tennessee Waltz ( 1959 )", type: "youtube", url: "5GWDgirgsq4", start: 2 },
-    { title: " Sunset Country Classic", type: "youtube", url: "XFKcH4446Vw", start: 2 },
-    { title: " Take Me Home Country Roads", type: "youtube", url: "iK0vsVRWsww", start: 12 }
-  ],
-  enka: [
-    { title: " 린 X 아즈마 아키-사사메 유키(細雪)", type: "youtube", url: "vgPvhr7ZWbw" },
-    { title: " 린 - 인생외길", type: "youtube", url: "rfjffhNxdLQ" },
-    { title: " 都はるみ 裏町ごころ", type: "youtube", url: "vnHDs5DlAG0" },
-    { title: " 雪中花 伍代夏子", type: "youtube", url: "B6WmSUodgRQ" },
-    { title: " Enka Song 05", type: "youtube", url: "vgPvhr7ZWbw" },
-    { title: " Enka Song 06", type: "youtube", url: "rfjffhNxdLQ" },
-    { title: " Enka Song 07", type: "youtube", url: "vnHDs5DlAG0" },
-    { title: " Enka Song 08", type: "youtube", url: "B6WmSUodgRQ" },
-    { title: " Enka Song 09", type: "youtube", url: "vgPvhr7ZWbw" },
-   { title: " 내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 2 },
-    { title: " 전향진 남자라는 이유로", type: "mp4", url: "bae.mp4" },
-    { title: " Enka Song 10", type: "youtube", url: "rfjffhNxdLQ" }
-  ],
-  jazz: [
-    { title: " 번지없는 주막", type: "youtube", url: "Z9vzsUxvsEg" },
-    { title: " 영시의 이별", type: "youtube", url: "29JJnC_L3OE" },
-    { title: " 배호 모음집", type: "youtube", url: "dEc-U2hgd6A" },
-    { title: " 꿈꾸는 백마강", type: "youtube", url: "50-PlZVG7aA" },
-    { title: " 고향아줌마", type: "youtube", url: "6wvUMP1ZS7U" },
-    { title: " Jazz Track 06", type: "youtube", url: "Z9vzsUxvsEg" },
-    { title: " Jazz Track 07", type: "youtube", url: "29JJnC_L3OE" },
-    { title: " Jazz Track 08", type: "youtube", url: "dEc-U2hgd6A" },
-    { title: " Jazz Track 09", type: "youtube", url: "50-PlZVG7aA" },
-    { title: " Jazz Track 10", type: "youtube", url: "6wvUMP1ZS7U" }
-  ]
-};
+/* 1. 단일 통합 데이터 정의 (title, artist, start 지정) */
+const songs = [ 
+  // YouTube 예시
+  { title: "Green Green Grass of Home", artist: "Tom Jones", type: "youtube", id: "uoo3P_xGYog", start: 12 },
+  { title: "the house of the rising sun", artist: "The Animals", type: "youtube", id: "GZqX8kg4rSQ", start: 5 },
+  { title: "Cotton Fields (1969)", artist: "CCR", type: "youtube", id: "AlSjx6F5Pl8" start: 5 },,
+  { title: "Country Boots Music", type: "youtube", id: "eQXVFUc4eDw" },
+  { title: "Red River Valley", type: "youtube", id: "70PwqEHGlb4" },
+  { title: "Tennessee Waltz ( 1959 )", artist: "Patti Page", type: "youtube", id: "5GWDgirgsq4" },
+  { title: "Sunset Country Classic", type: "youtube", id: "XFKcH4446Vw" },
+  { title: "Take Me Home Country Roads", artist: "John Denver", type: "youtube", id: "iK0vsVRWsww" },
+  { title: "Do That To Me One More Time", artist: "Captain & Tennille", type: "youtube", id: "z_XfJyrNLRQ" },
+  { title: "클래식 컨트리 음악 플레이리스트 히트곡", type: "youtube", id: "QOmIkPyHfOE" },
+  { title: "Best Country Heartland Songs", type: "youtube", id: "8VO67jNHLpA" },
 
-// 음표/아이콘 + [제목 - 아티스트] 텍스트 생성 함수
+  // Enka
+  { title: "인생외길", artist: "린", type: "youtube", id: "rfjffhNxdLQ" },
+  { title: "裏町ごころ", artist: "都はるみ", type: "youtube", id: "vnHDs5DlAG0" },
+  { title: "사사메 유키(細雪)", artist: "린 X 아즈마 아키", type: "youtube", id: "vgPvhr7ZWbw" },
+  { title: "雪中花", artist: "伍代夏子", type: "youtube", id: "B6WmSUodgRQ" },
+
+  // Jazz
+  { title: "번지없는 주막", artist: "Saxophone", type: "youtube", id: "Z9vzsUxvsEg" },
+  { title: "영시의 이별", artist: "Saxophone", type: "youtube", id: "29JJnC_L3OE" },
+  { title: "배호 모음집", artist: "Saxophone", type: "youtube", id: "dEc-U2hgd6A" },
+  { title: "꿈꾸는 백마강", artist: "Saxophone", type: "youtube", id: "50-PlZVG7aA" },
+
+  // 직접 만든 MP4 예시 (start: 시작 시간(초) 설정 예시)
+  { title: "내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 3 },
+  { title: "남자라는 이유로", artist: "전향진", type: "mp4", url: "bae.mp4", start: 2 },
+  { title: "고향아줌마", artist: "Saxophone", type: "youtube", id: "6wvUMP1ZS7U" }
+];
+
+/* [아이콘 + 제목 - 아티스트] 텍스트 반환 전용 함수 */
 function getFormattedTitle(song) {
   const icon = song.type === "mp4" ? "🎬" : "🎵";
   const nameText = song.artist ? `${song.title} - ${song.artist}` : song.title;
   return `${icon} ${nameText}`;
 }
-function getCategory() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("cat") || "old";
-}
 
-const currentCategory = getCategory();
-const currentListData = playlists[currentCategory] || playlists["old"];
-
-const activeNav = document.getElementById("nav-" + currentCategory);
-if (activeNav) activeNav.classList.add("active");
-
+/* 2. 플레이리스트 화면 생성 */
 let currentIndex = 0;
 const table = document.getElementById("playlist");
-const html5Video = document.getElementById("html5Video");
-const ytPlayerDiv = document.getElementById("ytPlayerDiv");
-const nowPlayingDiv = document.getElementById("nowPlaying");
-var player = null;
-var isYtReady = false;
+const mp4Video = document.getElementById("mp4Player");
+const nowPlaying = document.getElementById("nowPlaying");
 
-// 목록 생성
-if (currentListData && currentListData.length > 0) {
-  currentListData.forEach((song, index) => {
-    const tr = document.createElement("tr");
-   tr.innerHTML = `<td>${getFormattedTitle(song)}</td>`;
-    tr.onclick = () => playByIndex(index, true);
-    table.appendChild(tr);
-  });
-}
+songs.forEach((song, index) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${getFormattedTitle(song)}</td>`;
+  tr.onclick = () => playByIndex(index);
+  table.appendChild(tr);
+});
 
-// 유튜브 API 로드 완료 시 실행
+/* 3. 유튜브 API 및 mp4 통합 제어 */
+var player;
+
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player("ytPlayerFrame", {
-    videoId: "",
-    playerVars: { rel: 0, playsinline: 1, autoplay: 0 },
-    events: {
-      onReady: function() {
-        isYtReady = true;
-        playByIndex(0, false);
-      },
-      onStateChange: onStateChange
+  const firstItem = songs[0];
+  const initialVideoId = firstItem.type === 'youtube' ? firstItem.id : '';
+
+  player = new YT.Player("player", {
+    videoId: initialVideoId,
+    playerVars: { 
+      rel: 0, 
+      playsinline: 1,
+      autoplay: 0 // 유튜브 자동재생 안 함
+    },
+    events: { 
+      onReady: onPlayerReady,
+      onStateChange: onStateChange 
     }
   });
 }
 
-function playByIndex(index, autoPlay = true) {
-  currentIndex = index;
-  const currentSong = currentListData[currentIndex];
-  if (!currentSong) return;
-
-  const startTime = currentSong.start || 0;
-
- if (nowPlayingDiv) {
-  nowPlayingDiv.textContent = getFormattedTitle(currentSong);
+function onPlayerReady() {
+  playByIndex(0, true);
 }
-  setActiveRow(currentIndex);
 
-  // MP4 동영상 재생
-  if (currentSong.type === "mp4") {
-    if (isYtReady && player && typeof player.pauseVideo === "function") {
-      player.pauseVideo();
+function playByIndex(index, isInitialLoad = false) {
+  currentIndex = index;
+  const item = songs[currentIndex];
+  if (!item) return;
+
+  const startTime = item.start || 0; // 재생 시작 위치 (설정 안되어 있으면 0초)
+
+  // 곡명 표시 업데이트 (아이콘 + 제목 - 아티스트)
+  nowPlaying.textContent = getFormattedTitle(item);
+
+  // 1. MP4 파일인 경우
+  if (item.type === "mp4") {
+    if (player && typeof player.stopVideo === 'function') {
+      player.stopVideo();
     }
-    ytPlayerDiv.style.display = "none";
-    html5Video.style.display = "block";
-    
-    html5Video.src = currentSong.url;
-    html5Video.onloadedmetadata = function() {
-      html5Video.currentTime = startTime;
-      if (autoPlay) {
-        html5Video.play().catch(e => console.log(e));
+    document.getElementById("player").style.display = "none";
+
+    mp4Video.style.display = "block";
+    mp4Video.src = item.url;
+
+    // mp4 메타데이터 로드 후 시작 위치 지정 및 재생
+    mp4Video.onloadedmetadata = function() {
+      mp4Video.currentTime = startTime;
+      if (!isInitialLoad) {
+        mp4Video.play().catch(e => console.log(e));
       }
     };
   } 
-  // 유튜브 영상 재생
+  // 2. 유튜브 영상인 경우
   else {
-    html5Video.pause();
-    html5Video.style.display = "none";
-    ytPlayerDiv.style.display = "block";
+    mp4Video.pause();
+    mp4Video.style.display = "none";
 
-    if (!isYtReady || !player || typeof player.loadVideoById !== "function") {
-      const iframe = document.getElementById("ytPlayerFrame");
-      const autoPlayParam = autoPlay ? 1 : 0;
-      iframe.src = `https://www.youtube.com/embed/${currentSong.url}?enablejsapi=1&autoplay=${autoPlayParam}&start=${startTime}`;
-    } else {
-      if (autoPlay) {
-        player.loadVideoById({
-          videoId: currentSong.url,
+    document.getElementById("player").style.display = "block";
+    if (player && typeof player.loadVideoById === 'function') {
+      if (isInitialLoad) {
+        player.cueVideoById({
+          videoId: item.id,
           startSeconds: startTime
         });
       } else {
-        player.cueVideoById({
-          videoId: currentSong.url,
+        player.loadVideoById({
+          videoId: item.id,
           startSeconds: startTime
         });
       }
     }
   }
+
+  setActiveRow(index);
   updatePlayPauseButton();
 }
 
+function setActiveRow(index) {
+  const rows = document.querySelectorAll("#playlist tr");
+  rows.forEach((tr, i) => {
+    tr.classList.toggle("active", i === index);
+  });
+}
+
+// MP4 재생 종료 시 다음 곡으로 이동
+mp4Video.onended = function() {
+  playNext();
+};
+
 function playPrev() {
-  currentIndex = (currentIndex - 1 + currentListData.length) % currentListData.length;
-  playByIndex(currentIndex, true);
+  currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+  playByIndex(currentIndex);
 }
 
 function playNext() {
-  currentIndex = (currentIndex + 1) % currentListData.length;
-  playByIndex(currentIndex, true);
+  currentIndex = (currentIndex + 1) % songs.length;
+  playByIndex(currentIndex);
 }
 
 function togglePlayPause() {
-  const currentSong = currentListData[currentIndex];
-  if (!currentSong) return;
-
-  if (currentSong.type === "mp4") {
-    if (html5Video.paused) {
-      html5Video.play();
+  const item = songs[currentIndex];
+  
+  if (item.type === "mp4") {
+    if (mp4Video.paused) {
+      mp4Video.play();
     } else {
-      html5Video.pause();
+      mp4Video.pause();
     }
-  } else if (isYtReady && player && typeof player.getPlayerState === "function") {
+  } else {
+    if (!player || typeof player.getPlayerState !== 'function') return;
     const state = player.getPlayerState();
     if (state === YT.PlayerState.PLAYING) {
       player.pauseVideo();
@@ -368,10 +342,6 @@ function togglePlayPause() {
   updatePlayPauseButton();
 }
 
-html5Video.onended = function() { playNext(); };
-html5Video.onplay = updatePlayPauseButton;
-html5Video.onpause = updatePlayPauseButton;
-
 function onStateChange(e) {
   if (e.data === YT.PlayerState.ENDED) {
     playNext();
@@ -381,24 +351,22 @@ function onStateChange(e) {
 
 function updatePlayPauseButton() {
   const btn = document.getElementById("btnPlayPause");
-  const currentSong = currentListData[currentIndex];
-  if (!currentSong) return;
+  const item = songs[currentIndex];
 
-  if (currentSong.type === "mp4") {
-    btn.textContent = html5Video.paused ? "▶ 재생" : "⏸ 일시정지";
-  } else if (isYtReady && player && typeof player.getPlayerState === "function") {
+  if (item.type === "mp4") {
+    btn.textContent = !mp4Video.paused ? "⏸ 일시정지" : "▶ 재생";
+  } else {
+    if (!player || typeof player.getPlayerState !== 'function') return;
     const state = player.getPlayerState();
-    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생"; // 오타 수정된 부분
+    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생";
   }
 }
 
-function setActiveRow(index) {
-  const rows = document.querySelectorAll("#playlist tr");
-  rows.forEach((tr, i) => {
-    tr.classList.toggle("active", i === index);
-  });
-}
+/* MP4 관련 상태 변화 시 버튼 텍스트 업데이트 */
+mp4Video.onplay = updatePlayPauseButton;
+mp4Video.onpause = updatePlayPauseButton;
 
+/* 버튼 이벤트 연결 */
 document.getElementById("btnPrev").addEventListener("click", playPrev);
 document.getElementById("btnNext").addEventListener("click", playNext);
 document.getElementById("btnPlayPause").addEventListener("click", togglePlayPause);
