@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta content='meta.jpg' property='og:image'/>  
-  <title>utube mp42</title>
+  <title>test</title>
 
   <style>
     .center{
       text-align: center;
-    }
+       }
     .s{
       background-image:url("star.png");
       background-repeat: repeat-x;  
@@ -17,362 +17,33 @@
       height: 16px; 
       margin-bottom: 10px;
     }
-    #hello{
-      color: white;
-      text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    *{box-sizing: border-box;}
+body{margin: 0;
+     width: 50%;
     }
-    #hell{
-      color: white;
-      text-shadow: 2px 2px 4px #000000;
-    }
-    .world {
-      color: yellow;
-      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    }
-    
-    /* 기본 스타일 */
-    html, body {
-      background: #ffffff;
-      margin: 0;
-      padding: 0;
-      font-family: 'Pretendard', Arial, sans-serif;
-    }
-
-    /* 재생 중인 곡명 표시 영역 */
-    .now-playing {
-      max-width: 720px;
-      width: 95%;
-      margin: 20px auto 0;
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      word-break: keep-all;
-      color: white;
-      text-shadow: 1px 1px 0px black, 0 0 20px blue, 0 0 5px darkblue;
-    }
-
-    /* 플레이어 영역 */
-    .player-box {
-      max-width: 720px;
-      width: 95%;
-      margin: 10px auto 20px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .player-ratio {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 비율 */
-      background: #000;
-    }
-
-    #player, #mp4Player {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    #mp4Player {
-      display: none; /* 기본적으로 mp4 플레이어는 숨김 */
-      object-fit: contain;
-    }
-
-    /* 플레이리스트 테이블 */
-    table {
-      max-width: 720px;
-      width: 95%;
-      margin: 10px auto 20px;
-      border-collapse: collapse;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    td {
-      position: relative;
-      padding: 12px 15px 12px 40px;
-      border-bottom: 1px solid #eee;
-      cursor: pointer;
-      line-height: 1.4;
-      color: #333;
-      font-size: 15px;
-    }
-
-    tr:hover td {
-      background: #f9f9f9;
-    }
-
-    tr.active td {
-      background: #f4f8ff;
-      font-weight: bold;
-      color: #4a7cff;
-    }
-
-    tr.active td::before {
-      content: "▶";
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #4a7cff;
-    }
-
-    /* 하단 컨트롤러 */
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 50px;
-    }
-
-    .controls button {
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      border: 1px solid #ddd;
-      background: #fff;
-      border-radius: 30px;
-      transition: 0.2s;
-    }
-
-    .controls button:hover {
-      background: #f1f1f1;
-    }
+ul{
+padding: 0;
+list-style-type: none;
+border: 5px solid teal;
+}
+li{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: beige;
+border: 5px solid tomato;
+border-radius: 8px;
+}
   </style>
 </head>
 
 <body>
-<div class="s"></div> 
-<!-- 동영상 상단 재생 곡명 표시 영역 -->
-<div id="nowPlaying" class="now-playing"></div>
-
-<div class="player-box">
-  <div class="player-ratio">
-    <!-- 유튜브 플레이어 영역 -->
-    <div id="player"></div>
-    <!-- mp4 동영상 재생용 HTML5 video 태그 -->
-    <video id="mp4Player" controls playsinline></video>
-  </div>
-</div>
-
-<table id="playlist"></table>
-
-<div class="controls">
-  <button id="btnPrev">⏮ 이전</button>
-  <button id="btnPlayPause">▶ 재생</button>
-  <button id="btnNext">⏭ 다음</button>
-</div>
-
-<script>
-/* 1. 단일 통합 데이터 정의 (title, artist, start 지정) */
-const songs = [ 
-  // YouTube 예시
-  { title: "Green Green Grass of Home", artist: "Tom Jones", type: "youtube", id: "uoo3P_xGYog", start: 12 },
-  { title: "the house of the rising sun", artist: "The Animals", type: "youtube", id: "GZqX8kg4rSQ", start: 5 },
-  { title: "Cotton Fields (1969)", artist: "CCR", type: "youtube", id: "AlSjx6F5Pl8", start: 5 },,
-  { title: "Country Boots Music", type: "youtube", id: "eQXVFUc4eDw" },
-  { title: "Red River Valley", type: "youtube", id: "70PwqEHGlb4" },
-  { title: "Tennessee Waltz ( 1959 )", artist: "Patti Page", type: "youtube", id: "5GWDgirgsq4" },
-  { title: "Sunset Country Classic", type: "youtube", id: "XFKcH4446Vw" },
-  { title: "Take Me Home Country Roads", artist: "John Denver", type: "youtube", id: "iK0vsVRWsww" },
-  { title: "Do That To Me One More Time", artist: "Captain & Tennille", type: "youtube", id: "z_XfJyrNLRQ" },
-  { title: "클래식 컨트리 음악 플레이리스트 히트곡", type: "youtube", id: "QOmIkPyHfOE" },
-  { title: "Best Country Heartland Songs", type: "youtube", id: "8VO67jNHLpA" },
-
-  // Enka
-  { title: "인생외길", artist: "린", type: "youtube", id: "rfjffhNxdLQ" },
-  { title: "裏町ごころ", artist: "都はるみ", type: "youtube", id: "vnHDs5DlAG0" },
-  { title: "사사메 유키(細雪)", artist: "린 X 아즈마 아키", type: "youtube", id: "vgPvhr7ZWbw" },
-  { title: "雪中花", artist: "伍代夏子", type: "youtube", id: "B6WmSUodgRQ" },
-
-  // Jazz
-  { title: "번지없는 주막", artist: "Saxophone", type: "youtube", id: "Z9vzsUxvsEg" },
-  { title: "영시의 이별", artist: "Saxophone", type: "youtube", id: "29JJnC_L3OE" },
-  { title: "배호 모음집", artist: "Saxophone", type: "youtube", id: "dEc-U2hgd6A" },
-  { title: "꿈꾸는 백마강", artist: "Saxophone", type: "youtube", id: "50-PlZVG7aA" },
-
-  // 직접 만든 MP4 예시 (start: 시작 시간(초) 설정 예시)
-  { title: "내가 만든 mp4 동영상 1", type: "mp4", url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4", start: 3 },
-  { title: "남자라는 이유로", artist: "전향진", type: "mp4", url: "bae.mp4", start: 2 },
-  { title: "고향아줌마", artist: "Saxophone", type: "youtube", id: "6wvUMP1ZS7U" }
-];
-
-/* [아이콘 + 제목 - 아티스트] 텍스트 반환 전용 함수 */
-function getFormattedTitle(song) {
-  const icon = song.type === "mp4" ? "🎬" : "🎵";
-  const nameText = song.artist ? `${song.title} - ${song.artist}` : song.title;
-  return `${icon} ${nameText}`;
-}
-
-/* 2. 플레이리스트 화면 생성 */
-let currentIndex = 0;
-const table = document.getElementById("playlist");
-const mp4Video = document.getElementById("mp4Player");
-const nowPlaying = document.getElementById("nowPlaying");
-
-songs.forEach((song, index) => {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `<td>${getFormattedTitle(song)}</td>`;
-  tr.onclick = () => playByIndex(index);
-  table.appendChild(tr);
-});
-
-/* 3. 유튜브 API 및 mp4 통합 제어 */
-var player;
-
-function onYouTubeIframeAPIReady() {
-  const firstItem = songs[0];
-  const initialVideoId = firstItem.type === 'youtube' ? firstItem.id : '';
-
-  player = new YT.Player("player", {
-    videoId: initialVideoId,
-    playerVars: { 
-      rel: 0, 
-      playsinline: 1,
-      autoplay: 0 // 유튜브 자동재생 안 함
-    },
-    events: { 
-      onReady: onPlayerReady,
-      onStateChange: onStateChange 
-    }
-  });
-}
-
-function onPlayerReady() {
-  playByIndex(0, true);
-}
-
-function playByIndex(index, isInitialLoad = false) {
-  currentIndex = index;
-  const item = songs[currentIndex];
-  if (!item) return;
-
-  const startTime = item.start || 0; // 재생 시작 위치 (설정 안되어 있으면 0초)
-
-  // 곡명 표시 업데이트 (아이콘 + 제목 - 아티스트)
-  nowPlaying.textContent = getFormattedTitle(item);
-
-  // 1. MP4 파일인 경우
-  if (item.type === "mp4") {
-    if (player && typeof player.stopVideo === 'function') {
-      player.stopVideo();
-    }
-    document.getElementById("player").style.display = "none";
-
-    mp4Video.style.display = "block";
-    mp4Video.src = item.url;
-
-    // mp4 메타데이터 로드 후 시작 위치 지정 및 재생
-    mp4Video.onloadedmetadata = function() {
-      mp4Video.currentTime = startTime;
-      if (!isInitialLoad) {
-        mp4Video.play().catch(e => console.log(e));
-      }
-    };
-  } 
-  // 2. 유튜브 영상인 경우
-  else {
-    mp4Video.pause();
-    mp4Video.style.display = "none";
-
-    document.getElementById("player").style.display = "block";
-    if (player && typeof player.loadVideoById === 'function') {
-      if (isInitialLoad) {
-        player.cueVideoById({
-          videoId: item.id,
-          startSeconds: startTime
-        });
-      } else {
-        player.loadVideoById({
-          videoId: item.id,
-          startSeconds: startTime
-        });
-      }
-    }
-  }
-
-  setActiveRow(index);
-  updatePlayPauseButton();
-}
-
-function setActiveRow(index) {
-  const rows = document.querySelectorAll("#playlist tr");
-  rows.forEach((tr, i) => {
-    tr.classList.toggle("active", i === index);
-  });
-}
-
-// MP4 재생 종료 시 다음 곡으로 이동
-mp4Video.onended = function() {
-  playNext();
-};
-
-function playPrev() {
-  currentIndex = (currentIndex - 1 + songs.length) % songs.length;
-  playByIndex(currentIndex);
-}
-
-function playNext() {
-  currentIndex = (currentIndex + 1) % songs.length;
-  playByIndex(currentIndex);
-}
-
-function togglePlayPause() {
-  const item = songs[currentIndex];
-  
-  if (item.type === "mp4") {
-    if (mp4Video.paused) {
-      mp4Video.play();
-    } else {
-      mp4Video.pause();
-    }
-  } else {
-    if (!player || typeof player.getPlayerState !== 'function') return;
-    const state = player.getPlayerState();
-    if (state === YT.PlayerState.PLAYING) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
-    }
-  }
-  updatePlayPauseButton();
-}
-
-function onStateChange(e) {
-  if (e.data === YT.PlayerState.ENDED) {
-    playNext();
-  }
-  updatePlayPauseButton();
-}
-
-function updatePlayPauseButton() {
-  const btn = document.getElementById("btnPlayPause");
-  const item = songs[currentIndex];
-
-  if (item.type === "mp4") {
-    btn.textContent = !mp4Video.paused ? "⏸ 일시정지" : "▶ 재생";
-  } else {
-    if (!player || typeof player.getPlayerState !== 'function') return;
-    const state = player.getPlayerState();
-    btn.textContent = state === YT.PlayerState.PLAYING ? "⏸ 일시정지" : "▶ 재생";
-  }
-}
-
-/* MP4 관련 상태 변화 시 버튼 텍스트 업데이트 */
-mp4Video.onplay = updatePlayPauseButton;
-mp4Video.onpause = updatePlayPauseButton;
-
-/* 버튼 이벤트 연결 */
-document.getElementById("btnPrev").addEventListener("click", playPrev);
-document.getElementById("btnNext").addEventListener("click", playNext);
-document.getElementById("btnPlayPause").addEventListener("click", togglePlayPause);
-</script>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-
+<ul class="container" >
+<li class="item">1</li>
+<li class="item">1</li>
+<li class="item">1</li>
+<li class="item">1</li>
+<li class="item">1</li>
+</ul>
 </body>
 </html>
