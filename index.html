@@ -32,11 +32,15 @@
 
 /* 2. 리스트 여백 정돈 및 아이콘 위치 조정 */
 .my-list {
-  padding-left: 20px !important; /* 아이콘이 보일 정도의 최소 여백만 설정 */
+  padding-left: 21px !important; /* 아이콘이 보일 정도의 최소 여백만 설정 */
   margin: 0;
 	font-size: 1.2rem;
 }
-
+.ol-list {
+  padding-left: 15px !important; /* 아이콘이 보일 정도의 최소 여백만 설정 */
+  margin: 0;
+	
+}
 .me {
   margin-bottom: 8px; /* 항목 간격 */
   line-height: 1.4;
@@ -50,24 +54,7 @@
   list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='red' d='M12 2L2 22h20L12 2z'/%3E%3C/svg%3E");
 }
 
-/* 1. "감사합니다" 제목을 왼쪽 끝으로 내어쓰기 */
-.list-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding-left: 0; /* 완전히 왼쪽 정렬 */
-}
 
-/* 2. 리스트 여백 정돈 및 아이콘 위치 조정 */
-.my-list {
-  padding-left: 20px !important; /* 아이콘이 보일 정도의 최소 여백만 설정 */
-  margin: 0;
-}
-
-.me {
-  margin-bottom: 8px; /* 항목 간격 */
-  line-height: 1.4;
-}
 
 /* 기존 아이콘 CSS 유지 */
 .check {
@@ -95,7 +82,7 @@
   <div class="list-title1">감사합니다</div>
   <ul class="my-list">
     <li class="me square">고구마</li>
-	   <ol>
+	   <ol class="ol-list">
 		  <li class="me asterisk">고삼성전자의 주가 고삼성전자의 주가 부진이 길어부진이 길어지위한구마</li>
     <li class="me asterisk">고구마</li>
     <li class="me asterisk">고구마</li> 
@@ -103,7 +90,7 @@
     <li class="me asterisk_small">고구마</li> 
 	  </ol>
     <li class="me triangle">고삼성전자의 주가 부진고삼성전자의 주가 부진이 길어이 길어지들이구마</li>
-	  <ol>
+	  <ol class="ol-list">
 		  <li class="me check">고삼성전자의 주가 고삼성전자의 주가 부진이 길어부진이 길어지위한구마</li>
     <li class="me check">고구마</li>
     <li class="me check">고구마</li> 
