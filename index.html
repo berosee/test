@@ -18,7 +18,11 @@
       
 
 /* 전체 컨테이너 좌우 여백 조절 */
-.custom-list-container {
+.container {
+  display: flex;
+  flex-direction: row; /* 세로 방향으로 정렬 */
+  flex-wrap: nowrap; /* 화면이 작아지면 다음 줄로 넘어가도록 설정 */
+  background-color: #f9f9f9; /* 배경색 설정 (선택사항) */
   max-width: 800px; /* PC에서 콘텐츠가 커질 최대 너비 설정 */
   width: 99%;       /* 모바일 등 작은 화면에서는 화면의 90% 차지 */
   margin: 0 auto;   /* 중앙 정렬 */
@@ -81,27 +85,24 @@
   </style>
 </head>
 <body>
-  <div class="s"></div> 
-<div class="custom-list-container">
-  <div class="list-title1">감사합니다</div>
-  <ul class="my-list">
-    <li class="me square">고구마</li>
-	   <ol class="ol-list">
-		  <li class="me asterisk">고삼성전자의 주가 고삼성전자의 주가 부진이 길어부고삼성전자의 주가 부진이 길어부진이 길어지위한구마</li>
-    <li class="me asterisk">고구마</li>
-    <li class="me asterisk">고구마</li> 
-		     <li class="me asterisk_small">고구마</li>
-    <li class="me asterisk_small">고구마</li> 
-	  </ol>
-    <li class="me triangle">고삼성전자의 주가 부진고삼성전자의 주가 부진이 길어이 길어지들이구마</li>
-	  <ol class="ol-list">
-		  <li class="me check">고삼성전자의 주가 고삼성전자의 주가 부진이 길어부진이 길어지위한구마</li>
-    <li class="me check">고구마</li>
-    <li class="me check">고구마</li> 
-	  </ol>
-   
+  <ul class="check">
+    <li class="triangle">감사하빈1
+      <ol class="square">
+        <li class="asterisk_small">duddlf1</li>
+        <li class="asterisk_small">duddlf2</li>
+        <li class="asterisk_small">duddlf3</li>
+        <li class="asterisk_small">duddlf4</li>
+      </ol>
+    </li>
+    <li class="triangle">감사하빈2
+      <ol class="square">
+        <li class="asterisk_small">duddlf1</li>
+        <li class="asterisk_small">duddlf2</li>
+        <li class="asterisk_small">duddlf3</li>
+        <li class="asterisk_small">duddlf4</li>
+      </ol>
+    </li>
   </ul>
-</div>
 
 
 </body>
