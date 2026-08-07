@@ -80,10 +80,53 @@
   list-style-type: upper-alpha;
   list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='blue' d='M12 2l2.4 7.4H22l-6 4.4 2.3 7.2-6.3-4.6-6.3 4.6 2.3-7.2-6-4.4h7.6z'/%3E%3C/svg%3E");
 }
+
+body{font-size: 16px;}
+*{box-sizing: border-box;}
+.center{position: absolute;
+left: 50%;
+top: 50%;
+width: 100;
+max-width: 1080px;
+padding: 20px;
+transform: translate(-50%, -50%);}
+h1{margin-top: 0;}
+.item-wrap{
+padding:20px;
+background: #eee;
+border: 1px solid #eee;
+margin-bottom:10px;
+font-size: 24px;
+border-radius: 6px;
+border:3px solid red;}
+item{
+background: #fff;
+padding: 20px 10px;
+text-align: center;
+border-radius: 6px;
+margin-bottom: 10px;}
+.item-parent{width:50%;
+border: 3px solid red;}
+.percent-wrap .item{width:50%;
+border:3px solid red;}
+.item-rem{width:20rem;}
+
   </style>
 </head>
 <body>
-
+<div class="item-wrap percent-wrap">
+<h1>h1</h1>
+<div class="item">item 01</div>
+<div class="item-parent">
+<div class="item">item 02</div>
+</div>
+</div>
+<div class="item-wrap em-wrap">
+<h1>em, rem</h1>
+<div class="item-parent">
+<div class="item item-em">item em</div></div>
+<div class="item item-em">item em</div></div>
+<div>
 
 
 </body>
