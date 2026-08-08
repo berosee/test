@@ -19,17 +19,29 @@
 
 /* 전체 컨테이너 좌우 여백 조절 */
 .container {
-  padding-left: 30px; /* check 아이콘 여백 확보 (필요시 20~30px 조절) */
+  padding-left: 0px; /* check 아이콘 여백 확보 (필요시 20~30px 조절) */
   max-width: 800px; /* PC에서 콘텐츠가 커질 최대 너비 설정 */
   width: 99%;       /* 모바일 등 작은 화면에서는 화면의 90% 차지 */
   margin: 0 auto;   /* 중앙 정렬 */
  box-sizing: border-box;
 }
+.item-wrap{
+background: #d2e2ae;
+border: 1px solid #4e51f5;
+margin-bottom:0px;
+border-radius: 6px;
+}
+.item{
+background: #fff;
+padding: 0px 0px;
+text-align: left;
+border-radius: 6px;
+font-size: 1em;}
 
 /* 2. 하위 리스트(ol): 브라우저 기본 들여쓰기(40px)를 줄여 별모양(asterisk) 위치를 왼쪽으로 이동 */
 .container ol {
   padding-left: 18px; /* 별모양 리스트의 왼쪽 여백 축소 (필요시 15~20px 조절) */
-  margin: 0px 0 15px 0;
+  margin: 0px 0 0px 0;
 }
 /* 1. "감사합니다" 제목을 왼쪽 끝으로 내어쓰기 */
 .list-title1 {
@@ -98,20 +110,8 @@ transform: translate(-50%, -50%);}
 
 h1{margin-top: 0;}
 
-.item-wrap{
 
-background: #d2e2ae;
-border: 1px solid #4e51f5;
-margin-bottom:0px;
-border-radius: 6px;
-}
 
-.item{
-background: #fff;
-padding: 0px 0px;
-text-align: left;
-border-radius: 6px;
-font-size: 1em;}
 
 .font0{font-size: 1.8em;}
 
