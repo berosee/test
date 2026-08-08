@@ -42,9 +42,12 @@ font-size: 1em;}
 .container ol {
   padding-left: 20px; /* 별모양 리스트의 왼쪽 여백 축소 (필요시 15~20px 조절) */
   margin: 0px 0 0px 0;
-  font-size: 20px;
+  font-size: 1.3rem;
 }
-
+/* .container의 바로 아래 직계 자식인 <ol>에만 적용 */
+.container > li {
+  font-size: 1.5rem;
+}
 ul li{
   /*padding-left: 0px !important; /* 아이콘이 보일 정도의 최소 여백만 설정 */
   margin: 0;	
@@ -119,10 +122,7 @@ h1{margin-top: 0;}
 .font0{font-size: 1.8em;}
 
 
-/* .container의 바로 아래 직계 자식인 <ol>에만 적용 */
-.container > li {
-  font-size: 26px;
-}
+
 .item-parent{
   width:50%;
 border: 3px solid black;}
