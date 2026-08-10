@@ -215,17 +215,7 @@ text-align: center;
 margin: 0 auto;}
 
 
-/* 컨테이너 내부 요소 중앙 정렬 */
-.container.mar {
-  text-align: center;
-}
 
-/* 이미지 모바일 대응 및 반응형 크기 조절 */
-.container.mar img {
-  display: inline-block;
-  max-width: 100%; /* 화면보다 크면 화면 너비에 맞게 축소 */
-  height: auto;
-}
 
   </style>
 </head>
@@ -246,8 +236,8 @@ margin: 0 auto;}
 </ul>  <div class="container mar"></div>
 
 
-<div class="container mar">
-  <img src="176.jpg">
+<div class="container mar" style="text-align: center;">
+  <img src="meta.jpg" style="max-width: 100%; height: auto; display: inline-block;">
 </div>
 </body>
 </html>
