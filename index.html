@@ -24,7 +24,8 @@
   max-width: 800px; /* PC에서 콘텐츠가 커질 최대 너비 설정 */
   width: 95%;       /* 모바일 등 작은 화면에서는 화면의 90% 차지 */
   margin: 0 auto;   /* 중앙 정렬 */
- box-sizing: border-box;
+ box-sizing: border-box; /* box sizing 크기  고정 */
+ background-color: white;
 }
 .wrap{
 background: #d2e2ae;
@@ -36,6 +37,7 @@ padding: 16px 6px 16px 26px;
 background-color: #d1eed3;
 border: 1px solid #000000;
 border-radius: 6px;
+box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .item{
@@ -230,7 +232,8 @@ margin: 0 auto;}
 
 <div class="container" style="padding: 0 !important; text-align: right;">2026.8.10</div>
 
-<div class="container mar" style="padding: 0 !important; text-align: center;">
+<div class="container mar img-box" style="padding: 0 !important; text-align: center;">
+ 
   <img src="meta.jpg" style="display: block; margin: 0 auto; max-width: 100%; height: auto; border-radius: 6px;">
 </div>
 <div class="mar container" style="padding: 0 !important; text-align: center;"><button type="button" class="btn btn-primary">1감사합니다 Primary</button></div>
